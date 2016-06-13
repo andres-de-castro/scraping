@@ -76,11 +76,3 @@ class Scraper():
             except Exception as e:
                 sys.stderr.write(str(e))
                 queue.put(url)
-
-links = [
-            'http://www.google.com',
-            'http://www.facebook.com',
-            'http://www.github.com',
-            'http://www.yahoo.com',
-            'http://www.reddit.com'
-        ]
