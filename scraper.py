@@ -84,8 +84,3 @@ links = [
             'http://www.yahoo.com',
             'http://www.reddit.com'
         ]
-
-def transform_data(body, url=''):
-    print body
-
-Scraper(destinations=links, transform=transform_data)
