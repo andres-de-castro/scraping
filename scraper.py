@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-
 import sys
 
 from tornado import gen, ioloop
-from tornado.httpclient import AsyncHTTPClient, HTTPRequest, HTTPError
+from tornado.httpclient import AsyncHTTPClient, HTTPRequest
 from tornado.queues import Queue
 
 class Scraper():
@@ -12,12 +10,12 @@ class Scraper():
                 self,
                 destinations=None,
                 transform=None,
-                headers={ },
+                headers={},
                 max_clients=50,
                 maxsize=50,
-                connect_timeout=None,
-                request_timeout=600,
-                ):
+                connect_timeout=1200,
+                request_timeout=600,):
+
         """Instantiate a tornado async http client to do multiple concurrent requests"""
 
         if None in [destinations, transform]:
@@ -56,12 +54,15 @@ class Scraper():
     def get(self, transform, headers, connect_timeout, request_timeout, http_client):
         while True:
             url = yield self.queue.get()
-            request = HTTPRequest(url,
-                                connect_timeout=connect_timeout,
-                                request_timeout=request_timeout,
-                                method="GET",
-                                headers = headers
-                                )
+            try:
+                request = HTTPRequest(url,
+                                    connect_timeout=connect_timeout,
+                                    request_timeout=request_timeout,
+                                    method="GET",
+                                    headers = headers
+                )
+            except Exception as e:
+                sys.stderr.write('Destination {0} returned error {1}'.format(url, str(e) + '\n'))
 
             future = self.http_client.fetch(request)
 
