@@ -1,11 +1,10 @@
 # scraping
 
-Examples on how to scrape the web
+Web-scraping examples
 
-tse:
 
-Tokyo Stock Exchange
+Tokyo Stock Exchange (tse)
 
-Uses the Tornado async HTTP client class to make n concurrent requests, using a for-loop takes about one hour to scrape all of the data, this script does it in ~3.5 minutes.
+Use the Tornado async HTTP client to achieve N concurrent requests, in comparison to a simple for-loop concurrency enables us to scrape ~4000 urls in ~3.5 min or approximately 60X increase in speed.
 
-Warning: It is very likely that you will get rate limited or temporarily banned from ToS abuse.
+Note: Use this script at your own peril.
